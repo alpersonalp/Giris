@@ -2,9 +2,7 @@
 
 using System.Text;
 
-
-
-namespace Vize_Final_Hesaplama
+namespace ConsoleApp112532153
 
 {
 
@@ -72,7 +70,7 @@ namespace Vize_Final_Hesaplama
 
 
 
-                sonuc = (vize * 0.4) + (final * 0.6);
+                sonuc = vize * 0.4 + final * 0.6;
 
                 Console.WriteLine(j + ". Öğrencinin Not Ortalaması= " + sonuc);
 

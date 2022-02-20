@@ -20,7 +20,7 @@ do
 
     else
     {
-        Console.WriteLine($"{ ++deneme} bilgileriniz yanlış!");
+        Console.WriteLine($"{ ++deneme} . kez hatalı giriş! 3. de hesabınız bloke olur.");
     }
 
     if (deneme == 3)
