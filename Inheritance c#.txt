@@ -1,0 +1,235 @@
+C# Inheritance(Kalıtım,Miras)
+
+C# da oluşturulan her class aslında Object classından türemiştir.Yani her class object classından otomatik türetilir.Bir sınıf yazıp,oluşturduğumuz sınıftan nesne yaratırsak eğer,o nesnenin içinde otomatikman Equals(),GetHashCode(),GetType() ve ToString() metodlarını görürüz.Halbuki biz bu metodları sınıfımıza yazmamıştık.Bu metodlar Object sınıfından kalıtım yoluyla gelirler.Her nesneden ulaşılabilen bu metodlar aslında object sınıfının metodlarıdır.
+
+Bir sınıf sadece tek bir sınıftan kalıtım alabilir.Aynı anda birden fazla sınıftan kalıtım alamaz.Fakat ileride göreceğimiz interface yapıları kullanılarak bu sıkıntı aşılacaktır.
+
+Türeten sınıf(base class) , türeyen sınıf(derived class) için base olarak kabul edilir.Yani her sınıfın base si,kendi türediği sınıftır.Hiyerarşinin en tepesindeki sınıf her sınıfın base i değildir.Yani;
+A->B B->C(A dan B türesin,B den de C türesin).Burada C nin basesi B sınıfıdır.A sınıfı C nin basesi değildir.Her sınıfın basesi türediği sınıfıdır.
+Şimdi bu sayfada kalıtımla ilgili teorik olarak bilgiler verdim.İkinci sayfada mantığıyla ilgili konuşalım.
+
+Kalıtım mantığını ben Aristotales felsefesine benzetiyorum 
+Şimdi İnsan,Kızlar ve Erkekleri düşünelim.Burda hangisi Base Class,hangisi Derived Class olacaktır.
+Şimdi düşünelim,
+Erkekler ve Kızlar gruplarının ikiside sonuçta insan olduğu için, ikisinin de ortak özellikleri mevcuttur.Yani bir Erkeğin de Kızın da adı,soyadı,yaşı vs. gibi özellikler ortaktır.Ancak Erkeklerin ve Kızların kendine has,bir diğer grupta bulunmayan özellikleri vardır.Bunlar Erkekler de sakal,bıyık vs. olurken, Kızlar da makyaj yapmak,adamı hasta etmek gibi kendilerine has özellikleri vardır.Durum böyleyken ikisinde de ortak olan özellikler insan sınıfında bulunması gerekirken,kendilerine has özellikler kendi sınıflarında bulunmalıdır.Yani burda Base Class İnsan sınıfı olurken,Derived Class Erkek ve Kızlar olacaktır.Erkekler ve Kızlar ad,soyad vs. gibi insan için ortak olan özellikleri insan sınıfından kalıtımla alacaklardır.(Kendi sınıflarına da bu özellikleri tanımlayabiliriz ama kalıtımın amacı bu hiyerarşiyi kurmaktır.)Ve kendine has özelliklerini kendi sınıflarından alacaklardır.Bu mantıkta hiyerarşiyi uzatabiliriz.
+Umarım kalıtımın mantığını anlatabilmişimdir.
+
+Şimdi bir şirketin hiyerarşisini oluşturalım.
+Şirketin personellerini,satış danışmanlarını ve şirketin iş yaptığı müşterileri kalıtım yoluyla hiyerarşik bir şekilde yazalım.
+Şimdi düşünelim,personellerin,müşterilerin ve satış danışmanlarının ortak özellikleri nelerdir.Hepsi bir insan olduğu için adı,soyadı,yasi vs.. gibi özellikleri ortak.O halde bunları kalıtımla alacakları bir sınıf oluşturalım.Ben bu sınıfa İnsan.cs ismini veriyorum.Şimdi bu sınıfı oluşturalım.
+
+	---İnsan.cs---
+    class Insan
+    {
+        public string Adi { get; set; }
+        public string SoyAdi { get; set; }
+        public string Yasi { get; set; }
+        public string Cinsiyet { get; set; }
+    }
+	
+	Yukarıda aklıma geldiği kadar ortak özellikleri yazdım.Şimdi personelin sınıfını oluşturalım.Personeller.cs isimli class dosyasın da hazırlıyorum.
+	
+	---Personeller.cs---
+    class Personeller:Insan
+    {
+        public string PersonelMaasi { get; set; }
+        public string PersonelUnvani { get; set; }
+        public string PersonelCalismaSuresi { get; set; }
+    }
+	
+	
+Şimdi Personeller.cs sınıfın da yazdıklarımız personellere has özelliklerdir.Yani her insanın maaşı,ünvanı ve calisma süresi olmaz.Bu yüzden dolayı bu özellikler Personeller.cs sınıfın da yazılmıştır.Insan.cs sınıfından diğer özellikleri kalıtım yoluyla alacağız.Bunuda sınıf isminin yanında “:” operatörü ile Base classımızın ismini yazarak gerçekleştiriyoruz.”class Personeller:Insan”, bu ifade sayesinde Insan.cs sınıfındaki özellikleri Personeller.cs sınıfına kalıtımla almış olduk.
+Şimdi ise satış danışmanlarının sınıfını hazırlayalım.SatisDanismani.cs sınıfında hazırlıyorum.
+
+	---SatisDanismani.cs---
+    class SatisDanismani:Personeller
+    {
+        public string SatisSayisi { get; set; }
+    }
+	
+Şimdi dikkat ederseniz,SatisDanismani.cs sınıfının Base Classı Personeller.cs sınıfıdır.Bunun sebebi,satış danışmanları şirketimizin zaten bir personelidir.Ve personellerin has özellikleri satış danışmanında da olması gerekiyor.Bunuda Personeller.cs den kalıtımla alıyor.Şimdi soracaksınız.Peki satış danışmanının adı,soyadı vs.. gibi bilgileri yok mu? diye.Evet var.Personeller.cs sınıfı kalıtım yoluyla Insan.cs sınıfından o özellikleri aldığı için,otomatikman SatisDanismani.cs sınıfına da yansıyacaklardır.Hiyerarşiyi bu şekilde rahatça düzenleyebiliyoruz.Tabi her personellin yaptığı iş satış danışmanlığı olmadığı için, her personelin satış sayısı olmayacaktır.O yüzden kendine has özelliğini SatisDanismani.cs sınıfında yazdım.Diğer geri kalan özellikleri kalıtım yoluyla almış olacak zaten.
+Şimdi de müşteriler sınıfını oluşturalım.Müşteriler bizim şirketimizin personeli olmadığına dikkatinizi çekerim.Bu sınıfı Musteriler.cs sınıfında oluşturuyorum.
+
+	---Musteriler.cs---
+    class Musteriler:Insan
+    {
+        public string MusteriSirketi { get; set; }
+    }
+
+Müşteri de bir insan olduğundan olağan özellikleri Insan.cs sınıfından alıyor.Kendine has özelliği olan şirketini kendi sınıfına yazıyoruz.Bütün insanların şirketi yoktur.
+
+
+
+Kaynak : https://www.gencayyildiz.com/blog/cta-inheritancekalitimmiras/
+
+
+
+************************************************************************************************************************************************************
+
+
+
+
+
+
+C# Inheritance with Examples
+
+In c#, Inheritance is one of the primary concepts of object-oriented programming (OOP), and it is used to inherit the properties from one class (base) to another (child) class.
+
+The inheritance will enable us to create a new class by inheriting the properties from other classes to reuse, extend, and modify other class members' behavior based on our requirements.
+
+In c# inheritance, the class whose members are inherited is called a base (parent) class, and the class that inherits the members of the base (parent) class is called a derived (child) class.
+
+
+C# Inheritance Syntax
+
+Following is the syntax of implementing an inheritance to define a derived class that inherits the base class's properties in the c# programming language.
+
+	<access_modifier> class <base_class_name>
+	{
+	// Base class Implementation
+	}
+
+	<access_modifier> class <derived_class_name> : <base_class_name>
+	{
+	// Derived class implementation
+	}
+	
+If you observe the above syntax, we are inheriting the base class's properties into the child class to improve code reusability.
+
+Following is the simple example of implementing inheritance in the c# programming language.
+
+	public class X
+	{
+		public void GetDetails()
+		{
+       // Method implementation
+		}
+	}
+	public class Y: X
+	{
+		// your class implementation
+	}
+	
+	
+	class Program
+	{
+	static void Main(string[] args)
+		{
+			Y y = new Y();
+			y.GetDetails();
+		}
+	}
+	
+If you observe the above example, we defined a class “X” with the method called “GetDetails” and the class “Y” is inheriting from class “X”. After that, we call a “GetDetails” method by using an instance of derived class “Y”.
+
+
+In c#, it’s not possible to inherit the base class constructors in the derived class. The accessibility of other base class members also depends on the access modifiers that we used to define those members in a base class.
+
+using System;
+
+	namespace Tutlane
+{
+    public class User
+    {
+       public string Name;
+       private string Location;
+       public User()
+       {
+          Console.WriteLine("Base Class Constructor");
+       }
+       public void GetUserInfo(string loc)
+       {
+          Location = loc;
+          Console.WriteLine("Name: {0}", Name);
+          Console.WriteLine("Location: {0}", Location);
+       }
+    }
+    public class Details: User
+    {
+       public int Age;
+       public Details()
+       {
+          Console.WriteLine("Child Class Constructor");
+       }
+       public void GetAge()
+       {
+          Console.WriteLine("Age: {0}", Age);
+       }
+    }
+    class Program
+    {
+       static void Main(string[] args)
+       {
+          Details d = new Details();
+          d.Name = "Suresh Dasari";
+          // Compile Time Error
+          //d.Location = "Hyderabad";
+          d.Age = 32;
+          d.GetUserInfo("Hyderabad");
+          d.GetAge();
+          Console.WriteLine("\nPress Any Key to Exit..");
+          Console.ReadLine();
+       }
+    }
+}
+
+If you observe the above example, we defined a base class called “User” and inheriting all the user class properties into a derived class called “Details” and we are accessing all the members of the User class with an instance of the Details class.
+
+If we uncomment the commented code, we will get a compile-time error because the Location property in the User class is defined with a private access modifier. The private members can be accessed only within the class.
+
+C# Multi-Level Inheritance
+
+Generally, c# supports only single inheritance that means a class can only inherit from one base class. However, in c# the inheritance is transitive, and it allows you to define a hierarchical inheritance for a set of types, and it is called a multi-level inheritance.
+
+For example, if class C is derived from class B, and class B is derived from class A, then class C inherits the members declared in both class B and class A.
+
+using System;
+
+namespace Tutlane
+{
+    public class A
+    {
+       public string Name;
+       public void GetName()
+       {
+          Console.WriteLine("Name: {0}", Name);
+       }
+    }
+    public class B: A
+    {
+       public string Location;
+       public void GetLocation()
+       {
+          Console.WriteLine("Location: {0}", Location);
+       }
+    }
+    public class C: B
+    {
+       public int Age;
+       public void GetAge()
+       {
+          Console.WriteLine("Age: {0}", Age);
+       }
+    }
+    class Program
+    {
+       static void Main(string[] args)
+       {
+          C c = new C();
+          c.Name = "Suresh Dasari";
+          c.Location = "Hyderabad";
+          c.Age = 32;
+          c.GetName();
+          c.GetLocation();
+          c.GetAge();
+          Console.WriteLine("\nPress Any Key to Exit..");
+          Console.ReadLine();
+       }
+    }
+}
+
+If you observe the above example, we implemented three classes (A, B, C), and class C is derived from class B, and class B is derived from class A.
+
+By implementing a multi-level inheritance, class C can inherit the members declared in class B and class A. 
+
+kaynak : https://www.tutlane.com/tutorial/csharp/csharp-inheritance
